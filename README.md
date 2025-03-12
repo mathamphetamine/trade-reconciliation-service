@@ -71,7 +71,7 @@ trade-reconciliation-service/
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/mathamphetamine/trade-reconciliation-service
    cd trade-reconciliation-service
    ```
 
