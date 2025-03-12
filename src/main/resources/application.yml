@@ -1,0 +1,53 @@
+# Trade Reconciliation Service Configuration
+spring:
+  application:
+    name: trade-reconciliation-service
+  
+  # Database Configuration
+  datasource:
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/trade_reconciliation}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+  
+  # RabbitMQ Configuration
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    virtual-host: ${RABBITMQ_VHOST:/}
+
+# Server Configuration
+server:
+  port: 8080
+
+# Reconciliation Configuration
+reconciliation:
+  timeout-minutes: ${RECONCILIATION_TIMEOUT_MINUTES:60} # Default to 1 hour (60 minutes)
+  queue:
+    system-a: system-a-trades-queue
+    system-b: system-b-trades-queue
+    reconciliation-tasks: reconciliation-tasks-queue
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    com.trading.reconciliation: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/trade-reconciliation-service.log 
